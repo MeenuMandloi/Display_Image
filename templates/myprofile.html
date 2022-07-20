@@ -1,0 +1,19 @@
+{% load static %}
+<div>
+    <ul> User Detail</ul>
+
+    {{ user.firstname }}
+    <br>
+    {{ user.lastname }}
+    <br>
+    {{ user.phone }}
+    <br>
+    {{ user.email}}
+    <br>
+    {{ user.gender }}
+    <br>
+    {{ user.address }}
+    <br>
+
+    <img src="/media/{{ user.photo }}" alt="Smiley face" style="max-height: 150px; max-width: 120px;" class="img-fluid" width="250" height="250">
+</div>
