@@ -1,4 +1,7 @@
 from django.db import models
+from django.core.files import File
+import urllib
+
 
 
 class Usertable(models.Model):
@@ -10,7 +13,10 @@ class Usertable(models.Model):
     email = models.EmailField(max_length=20)
     password = models.CharField(max_length=8)
     is_admin = models.BooleanField(default=False, blank=True)
-    photo = models.ImageField(upload_to='media/', default="media/default.jpg")
+    photo = models.ImageField(upload_to='media/', default="media/default.jpg",blank=True,null=True)
+
+    def cache(self):
+        """Store image locally if we have a URL"""
 
     def __str__(self):
         return self.firstname

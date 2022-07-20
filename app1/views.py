@@ -7,8 +7,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from django.urls import reverse
 
-def index(request):
-    return render(request, "index.html")
 
 def Register(request):
     if request.method == "POST":
@@ -33,7 +31,7 @@ def Register(request):
                 if password != repassword:
                     return HttpResponse("Password does not match")
                 else:
-                    return render(request, "login.html", {"user": user,'photo': photo})
+                    return render(request, "login.html", {"user": user, 'photo': photo})
     else:
         return render(request, "register.html")
 
@@ -59,3 +57,31 @@ def login(request):
                     return HttpResponse('Please enter valid email.')
 
     return render(request, 'login.html')
+
+
+def update(request, id):
+    if request.method == 'POST':
+        firstname = request.POST.get('firstname')
+        lastname = request.POST.get('lastname')
+        gender_selection = request.POST.get('gender_selection')
+        phone = request.POST.get('phone')
+        address = request.POST.get('address')
+        photo = request.FILES.get('filename')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = Usertable.objects.get(id=id)
+        user.firstname = firstname
+        user.lastname = lastname
+        user.gender = gender_selection
+        user.phone = phone
+        user.address = address
+        user.email = email
+        user.password = password
+        user.photo = photo
+        user.save()
+        return HttpResponse("Successfully Updated")
+    user = Usertable.objects.get(id=id)
+    context = {
+        "user": user
+    }
+    return render(request, "update.html", context)
